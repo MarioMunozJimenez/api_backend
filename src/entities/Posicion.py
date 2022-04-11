@@ -1,3 +1,9 @@
+'''
+ Autor:     Mario Muñoz Jiménez
+ Creado:    08.04.2022
+ Archivo:   Posicion.py
+'''
+
 from pony.orm import *
 from main import db
 import datetime as date

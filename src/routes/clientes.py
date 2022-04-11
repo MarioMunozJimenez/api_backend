@@ -1,3 +1,9 @@
+'''
+ Autor:     Mario Muñoz Jiménez
+ Creado:    08.04.2022
+ Archivo:   clientes.py
+'''
+
 from flask import Flask, request, Blueprint
 from pony import orm
 from main import db
@@ -12,7 +18,7 @@ def get_clients():
     Devuelve todos los clientes
     """
     clients_list = orm.select(c for c in db.Clientes)
-    return str(clients_list.to_json)
+    return str(clients_list.show())
 
 @app_clientes.route('/clientes', methods=['POST'])
 def post_client():
@@ -34,16 +40,14 @@ def get_client(id):
     """
     Devuelve cliente con id = <id>
     """
-    print(request.json["id"])
     one_client = orm.select(c for c in db.Clientes if c.id == id)
-    return one_client
+    return str(one_client.show())
 
 @app_clientes.route('/clientes/<id>', methods=['DELETE'])
 def delete_client(id):
     """
     Borra cliente con id = <id>
     """
-    print(request.json["id"])
     deleted_client = orm.delete(c for c in db.Clientes if c.id == id)
     return deleted_client
 

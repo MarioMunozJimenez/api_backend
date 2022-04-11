@@ -1,3 +1,9 @@
+'''
+ Autor:     Mario Muñoz Jiménez
+ Creado:    08.04.2022
+ Archivo:   vehiculos.py
+'''
+
 from flask import Flask, request, Blueprint
 from pony import orm
 from main import db
@@ -12,14 +18,14 @@ def get_vehicles():
     Devuelve todos los vehiculos
     """
     vehicles_list = orm.select(v for v in db.Vehiculos)
-    return str(vehicles_list.to_json)
+    return str(vehicles_list.show())
 
 @app_vehiculos.route('/vehiculos', methods=['POST'])
 def post_vehicle():
     """
     json body con los campos --> crea un vehiculo
     """
-    new_vehicle = db.Vehiculo(
+    new_vehicle = db.Vehiculos(
         tipo=request.json["tipo"],
         matricula=request.json["matricula"],
         peso_maximo=request.json["peso_maximo"],
@@ -33,16 +39,14 @@ def get_vehicle(id):
     """
     Devuelve vehiculo con id = <id>
     """
-    print(request.json["id"])
     one_vehicle = orm.select(v for v in db.Vehiculos if v.id == id)
-    return one_vehicle
+    return str(one_vehicle.show())
 
 @app_vehiculos.route('/vehiculos/<id>', methods=['DELETE'])
 def delete_vehicle(id):
     """
     Borra vehiculo con id = <id>
     """
-    print(request.json["id"])
     deleted_vehicle = orm.delete(v for v in db.Vehiculos if v.id == id)
     return deleted_vehicle
 
@@ -78,5 +82,4 @@ def delivery_for_vehicle(id):
     for v in vehicles_list:
         if(v.id == id):
             new_order_for_vehicle = db.Pedidos["id"]
-            # Añadir el nuevo pedido a una lista de pedidos en Vehiculos
     return str(new_order_for_vehicle)

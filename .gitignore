@@ -3,3 +3,4 @@
 /venv
 /.vscode
 /src/routes/__pycache__
+/src/entities/__pycache__

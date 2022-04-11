@@ -1,3 +1,9 @@
+'''
+ Autor:     Mario Muñoz Jiménez
+ Creado:    08.04.2022
+ Archivo:   Clientes.py
+'''
+
 from pony.orm import *
 from main import db
 

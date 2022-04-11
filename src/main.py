@@ -1,3 +1,9 @@
+'''
+ Autor:     Mario Muñoz Jiménez
+ Creado:    08.04.2022
+ Archivo:   main.py
+'''
+
 from dotenv import load_dotenv
 from flask import Flask
 from pony.orm import Database
@@ -9,7 +15,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return "<h1>API Backend - Página de Bienvenida</h1>"
 
 app.config.update(dict(
     DEBUG = False,
@@ -23,7 +29,10 @@ app.config.update(dict(
 ))
 
 db = Database()
+from entities import Posicion
 from entities import Clientes
+from entities import Vehiculos
+from entities import Pedidos
 db.bind(**app.config['PONY'])
 db.generate_mapping(create_tables=True)
 
@@ -31,3 +40,9 @@ Pony(app)
 
 from routes.clientes import app_clientes
 app.register_blueprint(app_clientes)
+
+from routes.vehiculos import app_vehiculos
+app.register_blueprint(app_vehiculos)
+
+from routes.pedidos import app_pedidos
+app.register_blueprint(app_pedidos)
